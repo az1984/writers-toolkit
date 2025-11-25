@@ -1,0 +1,52 @@
+# ============================================================================
+# prompting.yaml — Per-action prompt wiring configuration
+#
+# This file describes which message slots are used for each high-level action,
+# and how those slots should be mapped to OpenAI-style message roles.
+#
+# The actual text for each slot (system/user/user2) comes from the templates:
+#   toolkit/prompts/<template_set>/<slot>.txt
+#
+# Example slots:
+#   - system  : system-level instructions / policy
+#   - user    : context payload (codex, storySoFar, etc.)
+#   - user2   : visible “task” instruction (optional)
+# ============================================================================
+
+actions:
+
+  # --------------------------------------------------------------------------
+  # ACTIONS_WRITE_BEAT — full NC-style beat generation
+  # Uses system + user + user2
+  # --------------------------------------------------------------------------
+  ACTIONS_WRITE_BEAT:
+    template_set: "nc/beat"
+    slots:
+      - slot: system
+        role: system
+        required: true
+
+      - slot: user
+        role: user
+        required: true
+
+      - slot: user2
+        role: user
+        required: false   # helpful, but some backends may ignore it
+
+  # --------------------------------------------------------------------------
+  # ACTIONS_MAKE_PRESENT_TENSE — transformation-only job
+  # Often does not need a separate user2 message.
+  # --------------------------------------------------------------------------
+  ACTIONS_MAKE_PRESENT_TENSE:
+    template_set: "nc/make_present_tense"
+    slots:
+      - slot: system
+        role: system
+        required: true
+
+      - slot: user
+        role: user
+        required: true
+
+      # No user2 slot here; only system + user are used.
