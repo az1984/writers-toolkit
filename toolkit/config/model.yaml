@@ -1,0 +1,64 @@
+# ============================================================================
+# model.yaml — Model configuration for the fiction toolkit
+#
+# This file defines how the toolkit talks to a language model. The code in
+# `toolkit/core/model_client.py` reads this file and uses:
+#
+#   - `base_url`      : the OpenAI-compatible HTTP endpoint
+#   - `model`         : the model name / ID
+#   - `api_key_env`   : which environment variable holds the API key
+#   - `timeout_seconds`: per-request timeout
+#   - `default_params`: default generation parameters (can be overridden per call)
+#
+# API keys must *not* be stored here. Instead, they are read from environment
+# variables, typically populated by a per-story `.env` file that is not
+# committed to version control.
+# ============================================================================
+
+# --------------------------------------------------------------------------
+# Active configuration: OpenRouter (cloud DeepSeek-R1)
+# Tag: cloud-deepseek-r1
+# --------------------------------------------------------------------------
+provider: "openai-compatible"
+base_url: "https://openrouter.ai/api/v1"
+model: "deepseek/deepseek-r1-0528"
+
+# Name of the environment variable that holds the OpenRouter API key.
+# Example `.env` entry (NOT checked in):
+#   OPENROUTER_API_KEY=sk-or-...
+api_key_env: "OPENROUTER_API_KEY"
+
+# Timeout for a single request, in seconds.
+timeout_seconds: 120
+
+# Default generation parameters for this toolkit.
+# These can be overridden per call by passing `params` into `call_model`.
+default_params:
+  temperature: 0.85
+  top_p: 0.95
+  max_tokens: 2048
+
+# --------------------------------------------------------------------------
+# Example alternative configuration: Local runtime (commented out)
+#
+# To use a local OpenAI-compatible server (e.g. vLLM, llamafile, or a
+# self-hosted Eurayle endpoint), you can comment out the block above and
+# uncomment and adjust the block below.
+#
+# Typical pattern:
+#   - base_url points to your local HTTP server
+#   - model is whatever your server exposes (e.g. "Eurayle-70B-Instruct")
+#   - api_key_env can be a dummy key env var if your server ignores it
+# --------------------------------------------------------------------------
+
+# provider: "openai-compatible"
+# base_url: "http://localhost:8080/v1"
+# model: "Eurayle-70B-Instruct"
+#
+# api_key_env: "LLM_API_KEY"
+# timeout_seconds: 120
+#
+# default_params:
+#   temperature: 0.8
+#   top_p: 0.95
+#   max_tokens: 2048

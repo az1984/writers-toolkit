@@ -1,0 +1,40 @@
+# ============================================================================
+# Beat Generator Configuration (Minimal)
+# ============================================================================
+
+context_rules:
+  include_outline: true
+  include_threads: true
+  include_characters: true
+  include_locations: true
+
+  # Only pull context from chapters <= current chapter
+  forbid_future_context: true
+
+  # From outline:
+  #   - include last N scenes (prevents too much text)
+  chapter_window:
+    previous_scenes: 2
+    future_scenes: 0
+
+character_over_time:
+  use_over_time: true
+  merge_voice: true          # allow chapter-specific voice overrides
+  merge_behavior: true       # emotional/physical state
+  forbid_future_states: true # never include states from later chapters
+
+threads:
+  use_threads: true
+  forbid_future_truths: true  # prevents spoilers or premature reveals
+  forbid_future_lies: false   # lies can continue unless thread says otherwise
+
+style:
+  include_global_style: true
+  include_pov_voice: true
+  pov_voice_overrides: true   # let over-time override baseline voice
+
+prompt_parameters:
+  # Can tune later. For now: simple.
+  target_words: 400
+  temperature: 0.85
+  creativity: medium

@@ -1,0 +1,21 @@
+# ============================================================================
+# Fiction toolkit / story project ignores
+# ============================================================================
+
+# Per-story environment config (API keys, secrets)
+.env
+
+# Python build artifacts
+__pycache__/
+*.pyc
+
+# Local caches and indexes
+.project_config/
+**/__pycache__/
+
+# Generated exports
+exports/
+**/exports/
+
+# Optional: editor / OS cruft
+.DS_Store
