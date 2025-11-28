@@ -1,50 +1,21 @@
-# ============================================================================
-# codex/index.yaml — Minimal, Story-Local Codex Index
-# ============================================================================
+# codex/index.yaml
+# Minimal codex index for the Madison test story.
 
 types:
-
   CHAR:
-    label: "Character"
-    id_prefix: "[CHAR_"
     folder: "characters"
-    default_tags: ["character"]
-    template: "codex/templates/character.md"
 
   CHAR_OVERTIME:
-    label: "Character State Over Time"
-    id_prefix: "[CHAR_"
-    folder: "characters"            # stored alongside main cards
-    default_tags: ["character-over-time"]
-    template: "codex/templates/character_over_time.md"
+    folder: "characters_over_time"
 
   LOC:
-    label: "Location"
-    id_prefix: "[LOC_"
     folder: "locations"
-    default_tags: ["location"]
-    template: "codex/templates/location.md"
 
   THREAD:
-    label: "Story Thread / Arc"
-    id_prefix: "[THREAD_"
     folder: "threads"
-    default_tags: ["thread"]
-    template: "codex/templates/thread.md"
 
   STYLE:
-    label: "Prose Style Guide"
-    id_prefix: "[STYLE_"
     folder: "style"
-    default_tags: ["style"]
-    template: "codex/templates/style.md"
 
   VOICE:
-    label: "Character Voice Guide"
-    id_prefix: "[VOICE_"
-    folder: "voices"
-    default_tags: ["voice"]
-    template: "codex/templates/voice.md"
-
-# Additional types (TECH, FACTION, EVID, MAGIC, etc.)
-# get added by the TUI when first used.
+    folder: "voice"

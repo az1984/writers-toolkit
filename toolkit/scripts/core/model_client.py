@@ -7,7 +7,7 @@ Model client utilities for the fiction toolkit.
 This module provides a single high-level function, `call_model`, which:
 - Loads model configuration from `toolkit/config/model.yaml` under a given story root
 - Reads the API key from an environment variable (name defined in the config)
-- Calls an OpenAI-compatible chat completion endpoint
+- Calls an OpenAI-compatible chat completion endpoint via the v1 OpenAI client
 - Returns the primary completion text along with optional token usage metadata
 
 The goal is to keep all model-specific wiring and environment concerns here, so the
@@ -21,7 +21,7 @@ from pathlib import Path
 from typing import Any, Dict, List, Optional
 
 import yaml
-import openai
+from openai import OpenAI
 
 
 # ------------------------------------------------------------------------------
@@ -144,31 +144,33 @@ def call_model(
             f"Environment variable {api_key_env!r} is not set; cannot call model."
         )
 
-    # Configure the OpenAI-compatible client.
-    openai.api_key = api_key
+    # Configure the OpenAI-compatible client using the v1 client class.
+    client_kwargs: Dict[str, Any] = {"api_key": api_key}
     if base_url:
-        # Many local servers expose an OpenAI-compatible API at a custom base URL.
-        openai.base_url = base_url
+        # Many local or proxy servers expose an OpenAI-compatible API at a custom base URL.
+        client_kwargs["base_url"] = base_url
+
+    client = OpenAI(**client_kwargs)
 
     default_params: Dict[str, Any] = config.get("default_params", {})
     final_params: Dict[str, Any] = {**default_params, **(params or {})}
 
-    response: Dict[str, Any] = openai.ChatCompletion.create(
+    response = client.chat.completions.create(
         model=model_name,
         messages=messages,
-        request_timeout=timeout_seconds,
+        timeout=timeout_seconds,
         **final_params,
     )
 
     # Extract the primary completion text and token usage.
-    first_choice: Dict[str, Any] = response["choices"][0]
-    text: str = first_choice["message"]["content"]
+    first_choice = response.choices[0]
+    text: str = first_choice.message.content
 
-    usage: Dict[str, Any] = response.get("usage", {})
+    usage = getattr(response, "usage", None)
     tokens_used: Dict[str, Optional[int]] = {
-        "prompt_tokens": usage.get("prompt_tokens"),
-        "completion_tokens": usage.get("completion_tokens"),
-        "total_tokens": usage.get("total_tokens"),
+        "prompt_tokens": getattr(usage, "prompt_tokens", None) if usage is not None else None,
+        "completion_tokens": getattr(usage, "completion_tokens", None) if usage is not None else None,
+        "total_tokens": getattr(usage, "total_tokens", None) if usage is not None else None,
     }
 
     return {

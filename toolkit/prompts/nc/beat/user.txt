@@ -1,0 +1,10 @@
+Take into account the following glossary of characters/locations/items/lore... when writing your response:
+
+<codex>
+{{CODEX_BLOCK}}
+</codex>
+
+The story so far:
+<storySoFar>
+{{STORY_SO_FAR_BLOCK}}
+</storySoFar>

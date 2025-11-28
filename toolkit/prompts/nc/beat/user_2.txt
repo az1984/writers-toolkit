@@ -1,0 +1,5 @@
+Write {{INSTRUCTIONS_BLOCK}} words that continue the story, using the following instructions:
+<instructions>
+<pointOfView type="third person limited"/>
+{{INSTRUCTIONS_BLOCK}}
+</instructions>

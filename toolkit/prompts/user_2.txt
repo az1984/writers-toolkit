@@ -1,6 +1,0 @@
-Write 400 words that continue the story, using the following instructions:
-<instructions>
-<pointOfView type="third person limited"/>
-
-
-</instructions>
