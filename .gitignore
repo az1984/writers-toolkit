@@ -4,6 +4,7 @@
 
 # Per-story environment config (API keys, secrets)
 .env
+.env.*
 
 # Python build artifacts
 __pycache__/
