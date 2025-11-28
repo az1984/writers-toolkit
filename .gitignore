@@ -19,3 +19,5 @@ exports/
 
 # Optional: editor / OS cruft
 .DS_Store
+.env.deepseek
+.env.example
