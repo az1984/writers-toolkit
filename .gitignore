@@ -4,6 +4,9 @@
 
 # Per-story environment config (API keys, secrets)
 .env
+.env.local
+.env.deepseek
+.env.production
 .env.*
 
 # Python build artifacts
